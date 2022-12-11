@@ -11,7 +11,7 @@ def set_a(notebook):
         a_frame = curve_frame(notebook,
                                 notebook.root.data,
                                 pipeline_a,
-                                lt=r"θ x Mean(θ)")
+                                lt=r"a")
                                 
         notebook.a_frame = a_frame
         notebook.add(a_frame, text="a")

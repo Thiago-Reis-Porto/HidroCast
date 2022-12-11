@@ -49,31 +49,31 @@ class App(customtkinter.CTk):
         self.frame_left.grid_rowconfigure(11, minsize=10)  # empty row with minsize as spacing
 
         self.label_app_name = customtkinter.CTkLabel(master=self.frame_left,
-                                              text="HidroCast",
-                                              text_font=("Roboto Medium", -16))  # font name and size in px
+                                                     text="HidroCast",
+                                                     text_font=("Roboto Medium", -16))  # font name and size in px
         self.label_app_name.grid(row=1, column=0, pady=10, padx=10)
 
-        self.button_open_p = customtkinter.CTkButton(master=self.frame_left,
-                                                text="Open Project",
-                                                command=self.button_event)
-        self.button_open_p.grid(row=2, column=0, pady=10, padx=20)
+        # self.button_open_p = customtkinter.CTkButton(master=self.frame_left,
+        #                                              text="Open Project",
+        #                                              command=self.button_event)
+        # self.button_open_p.grid(row=2, column=0, pady=10, padx=20)
 
-        self.button_save_p = customtkinter.CTkButton(master=self.frame_left,
-                                                text="Save Project",
-                                                command=self.button_event)
-        self.button_save_p.grid(row=3, column=0, pady=10, padx=20)
+        # self.button_save_p = customtkinter.CTkButton(master=self.frame_left,
+        #                                              text="Save Project",
+        #                                              command=self.button_event)
+        # self.button_save_p.grid(row=3, column=0, pady=10, padx=20)
 
         self.button_help = customtkinter.CTkButton(master=self.frame_left,
-                                                text="Help",
-                                                command=self.button_event)
+                                                   text="Help",
+                                                   command=self.button_event)
         self.button_help.grid(row=4, column=0, pady=10, padx=20)
 
         #Method def
         self.label_mode = customtkinter.CTkLabel(master=self.frame_left, text="Method Selection:")
         self.label_mode.grid(row=9, column=0, pady=0, padx=20, sticky="w")
         self.method_menu = customtkinter.CTkOptionMenu(master=self.frame_left,
-                                                        values=self.METHODS,
-                                                        command=self.__set_method_wraper)
+                                                       values=self.METHODS,
+                                                       command=self.__set_method_wraper)
         self.method_menu.grid(row=10, column=0, pady=10, padx=20, sticky="w")
 
         # ============ frame_center ============
@@ -93,21 +93,21 @@ class App(customtkinter.CTk):
         # ============ frame_right ============
         self.frame_right.rowconfigure([3,4,5,10], weight=1)
 
-        button_home = customtkinter.CTkButton(self.frame_right, 
-                                              text='VG',
-                                              width=90)
-        button_home.grid(row=0, pady=20)
+        # button_home = customtkinter.CTkButton(self.frame_right, 
+        #                                       text='VG',
+        #                                       width=90)
+        # button_home.grid(row=0, pady=20)
 
         button_tables = customtkinter.CTkButton(self.frame_right, 
                                                 text ='Tables',
                                                 width =90,
                                                 command = self.create_table_window) 
-        button_tables.grid(row=1)
+        button_tables.grid(row=0, pady=20)
 
-        button_plots = customtkinter.CTkButton(self.frame_right, 
-                                                text='Plots',
-                                                width=90)
-        button_plots.grid(row=2, pady=20)
+        # button_plots = customtkinter.CTkButton(self.frame_right, 
+        #                                         text='Plots',
+        #                                         width=90)
+        # button_plots.grid(row=2, pady=20)
 
 
         label_depth = customtkinter.CTkLabel(self.frame_right, text="Depth unit")
@@ -142,7 +142,7 @@ class App(customtkinter.CTk):
     def create_table_window(self):
         window = customtkinter.CTkToplevel(self)
         window.geometry("600x400")
-
+        window.title("Tables")
         l = get_tables_list(data)
 
         menu = customtkinter.CTkOptionMenu(window, 
@@ -159,6 +159,7 @@ class App(customtkinter.CTk):
             table.show()
         else:
             menu.set('')
+
     def button_event(self):
         print("Button pressed")
 

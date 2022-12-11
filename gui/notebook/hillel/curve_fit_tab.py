@@ -43,10 +43,10 @@ class curve_frame(customtkinter.CTkFrame):
                                            text_font='Helvetica 10 bold')
         label_VG.grid(row=0, column=0)
 
-        menu = customtkinter.CTkOptionMenu(frame_menu, 
-                                           values=['d','c'], )
-                                           #command = self.__change_table)
-        menu.grid(row=0, column=1, pady=10)
+        # menu = customtkinter.CTkOptionMenu(frame_menu, 
+        #                                    values=['d','c'], )
+        #                                    #command = self.__change_table)
+        # menu.grid(row=0, column=1, pady=10)
         #--------------------------------------------------------------------------
 
         f = customtkinter.CTkFrame(frame_CF, fg_color="white")

@@ -189,6 +189,8 @@ def plot_result(data, fig_size=(9.7, 6.7), bigger_font=False):
   return path+".png"
 
 def set_result_visualization(frame, data, bigger_font=False):
+  for widget in frame.winfo_children():
+    widget.destroy()
   path = plot_result(data, bigger_font=bigger_font)
   img = tkinter.PhotoImage(file=path)
   image_window = ScrollableImage(frame, image=img, scrollbarwidth=6)

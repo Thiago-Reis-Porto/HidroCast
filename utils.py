@@ -2,7 +2,6 @@ from tkinter import filedialog
 from tkinter import messagebox
 import re 
 import os
-import tkinter
 import pandas as pd
 import sympy as sy
 import numpy as np
@@ -219,3 +218,13 @@ def get_tables_list(data):
         if type(data[key]) == df_type:
             l.append(key)
     return l
+
+def export_tables(data):
+    path = 'Tables'
+    isExist = os.path.exists(path)
+    if not isExist:
+        os.makedirs(path)
+        
+    keys = get_tables_list(data)
+    for k in keys:
+        data[k].to_csv(os.path.join(path, k))

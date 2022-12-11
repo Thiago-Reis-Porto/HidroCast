@@ -1,8 +1,8 @@
 import numpy as np
 import pandas as pd
 from scipy.optimize import curve_fit
-from utils import reta
-from plots import plot_ajuste_2, plot_ajuste, set_image_visualization
+from utils import reta, export_tables
+from plots import plot_ajuste, set_image_visualization
 from plots import set_result_visualization
 
 def get_a_b(data):
@@ -221,4 +221,16 @@ def pipeline_e_f(frame, data, **f_pos):
     data['EQC TABLE'] = result_table
     
     note = frame.master.master
-    set_result_visualization(note.result_frame, data, bigger_font=True)  
+    set_result_visualization(note.result_frame, data, bigger_font=True)
+
+    data["Result Reichardt et al"] = data["EQC TABLE"]
+    data["Result Reichardt et al"].columns = ['z',
+                                              'Theta 0',
+                                              'Equation K theta']
+
+    data["Result Reichardt et al"].loc[0] =  ['cm',
+                                              'cm^3*cm^(-3)',
+                                              'cm / day']
+    data["EQC TABLE"] = None
+    data["Reichardt Summary"] = get_table(data)
+    export_tables(data)    

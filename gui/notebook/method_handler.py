@@ -41,6 +41,7 @@ def set_method(method, notebook):
         notebook = set_a_b(notebook)
         notebook = set_c_d(notebook)
         notebook = set_e_f(notebook)
+        notebook.actual_method = "Reichardt et al. (2004)"
 
     notebook = set_result(notebook, notebook.actual_method)
     

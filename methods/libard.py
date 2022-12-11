@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 from scipy.optimize import curve_fit
-from utils import reta
+from utils import reta, export_tables
 from plots import plot_ajuste_2,plot_ajuste, set_image_visualization
 from plots import set_result_visualization
 
@@ -93,21 +93,36 @@ def pipeline_A_B(frame, data, **f_pos):
     result = np.apply_along_axis(eqc, 0, np.array([k0, Beta, theta_0.values]))
     
     units = [r'$\mathbf{cm}$', 
-         r'$\mathbf{cm^3.cm^{-3}}$', 
-         r'-', 
-         r'$\mathbf{cm / days}$', 
-         r'$\mathbf{cm / days}$']
+             r'$\mathbf{cm^3.cm^{-3}}$', 
+             r'-', 
+             r'$\mathbf{cm / day}$', 
+             r'$\mathbf{cm / day}$']
 
     np_result = np.array([z, theta_0.values, np.round(Beta, 3), np.round(k0, 3), result])
     np_result = np.insert(np_result, 0, units, axis=1)
     result_table = pd.DataFrame(np_result.T, 
-                            columns=[r'z', 
-                                     r'$\mathbf{θ_0}$',
-                                     r'$\mathbf{\beta}$',
-                                     r'$\mathbf{K_0}$',
-                                     r'Equação $\mathbf{K(θ)}$'])
+                                columns=[r'z', 
+                                         r'$\mathbf{θ_0}$',
+                                         r'$\mathbf{\beta}$',
+                                         r'$\mathbf{K_0}$',
+                                         r'Equação $\mathbf{K(θ)}$'])
 
     data['EQC TABLE'] = result_table
 
     note = frame.master.master
-    set_result_visualization(note.result_frame, data)                          
+    set_result_visualization(note.result_frame, data)
+    
+    data["Result Libard"] = data["EQC TABLE"]
+    data["Result Libard"].columns = ['z',
+                                     'Theta 0',
+                                     'Beta',
+                                     'K0',
+                                     'Equation K theta']
+
+    data["Result Libard"].loc[0] =  ['cm',
+                                     'cm^3*cm^(-3)',
+                                     '-',
+                                     'cm / day',
+                                     'cm / day']
+    data["EQC TABLE"] = None
+    export_tables(data)                          

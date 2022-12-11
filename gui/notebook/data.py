@@ -1,11 +1,11 @@
 import customtkinter
+import pandas as pd
 from utils import only_numbers
 from utils import browse_files, browse_files_2
 from pandastable import Table
 
 def wraper_load(label, data, key):
     browse_files(label, data, key)
-    print(key)
     data["DEPTHS"] = data[key].columns
     data["TIME"] = data[key].index
     if key == "PSI M":
@@ -14,10 +14,12 @@ def wraper_load(label, data, key):
 def create_view_window(root, data, key):
     if data[key] is None:
         return
+
+    df = pd.DataFrame(data[key]).reset_index()
     window = customtkinter.CTkToplevel(root)
     window.geometry("600x400")
     window.title(key)
-    table = Table(window, dataframe=data[key], editable=False)
+    table = Table(window, dataframe=df, editable=False)
     table.show()
 
 def set_data_frame(notebook):
@@ -39,53 +41,53 @@ def set_data_frame(notebook):
     # data_frame.grid_rowconfigure(20, minsize=10)
 
     # -----------TENSIOMETER-----------
-    key_1 = "TENSIOMETER"
-    label_tensio = customtkinter.CTkLabel(
-        data_frame, text=key_1, text_font="Helvetica 10 bold")
-    label_tensio.grid(row=0, column=1, pady=10)
+    # key_1 = "TENSIOMETER"
+    # label_tensio = customtkinter.CTkLabel(
+    #     data_frame, text=key_1, text_font="Helvetica 10 bold")
+    # label_tensio.grid(row=0, column=1, pady=10)
 
-    label_tensio_file = customtkinter.CTkLabel(data_frame, text="No File")
-    label_tensio_file.grid(row=1, column=2)
+    # label_tensio_file = customtkinter.CTkLabel(data_frame, text="No File")
+    # label_tensio_file.grid(row=1, column=2)
 
-    button_tensio_load = customtkinter.CTkButton(master=data_frame,
-                                                 text="LOAD",
-                                                 command=lambda: wraper_load(label_tensio_file,
-                                                                              data,
-                                                                              key_1),
-                                                 width=60)
-    button_tensio_load.grid(row=1, column=0)
+    # button_tensio_load = customtkinter.CTkButton(master=data_frame,
+    #                                              text="LOAD",
+    #                                              command=lambda: wraper_load(label_tensio_file,
+    #                                                                           data,
+    #                                                                           key_1),
+    #                                              width=60)
+    # button_tensio_load.grid(row=1, column=0)
 
-    button_tensio_view = customtkinter.CTkButton(master=data_frame,
-                                                 text="VIEW",
-                                                 command=lambda: create_view_window(data_frame,
-                                                                                    data,
-                                                                                    key_1),
-                                                 width=60)
-    button_tensio_view.grid(row=1, column=1)
+    # button_tensio_view = customtkinter.CTkButton(master=data_frame,
+    #                                              text="VIEW",
+    #                                              command=lambda: create_view_window(data_frame,
+    #                                                                                 data,
+    #                                                                                 key_1),
+    #                                              width=60)
+    # button_tensio_view.grid(row=1, column=1)
 
     # -----------THETAS PHI-----------
-    key_2 = "THETAS PHI"
-    label_theta_phi = customtkinter.CTkLabel(
-        data_frame, text=key_2, text_font="Helvetica 10 bold")
-    label_theta_phi.grid(row=3, column=1, pady=10)
+    # key_2 = "THETAS PHI"
+    # label_theta_phi = customtkinter.CTkLabel(
+    #     data_frame, text=key_2, text_font="Helvetica 10 bold")
+    # label_theta_phi.grid(row=3, column=1, pady=10)
 
-    label_thetas_phi_file = customtkinter.CTkLabel(data_frame, text="No File")
-    label_thetas_phi_file.grid(row=4, column=2)
-    button_theta_phi = customtkinter.CTkButton(master=data_frame,
-                                               text="LOAD",
-                                               command=lambda: browse_files(label_thetas_phi_file,
-                                                                            data,
-                                                                            key_2),
-                                               width=60)
-    button_theta_phi.grid(row=4, column=0)
+    # label_thetas_phi_file = customtkinter.CTkLabel(data_frame, text="No File")
+    # label_thetas_phi_file.grid(row=4, column=2)
+    # button_theta_phi = customtkinter.CTkButton(master=data_frame,
+    #                                            text="LOAD",
+    #                                            command=lambda: browse_files(label_thetas_phi_file,
+    #                                                                         data,
+    #                                                                         key_2),
+    #                                            width=60)
+    # button_theta_phi.grid(row=4, column=0)
 
-    button_psi_m_view = customtkinter.CTkButton(master=data_frame,
-                                                text="VIEW",
-                                                command=lambda: create_view_window(data_frame,
-                                                                                    data,
-                                                                                    key_2),
-                                                width=60)
-    button_psi_m_view.grid(row=4, column=1)
+    # button_psi_m_view = customtkinter.CTkButton(master=data_frame,
+    #                                             text="VIEW",
+    #                                             command=lambda: create_view_window(data_frame,
+    #                                                                                 data,
+    #                                                                                 key_2),
+    #                                             width=60)
+    # button_psi_m_view.grid(row=4, column=1)
 
     # -----------PSI M-----------
     key_3 = "PSI M"
@@ -201,8 +203,10 @@ def set_data_frame(notebook):
     sv.trace("w", lambda name, index, mode,
              sv=sv: data.update({key_9: int(sv.get())}))
 
-    t = customtkinter.CTkEntry(data_frame, validate="key", validatecommand=(
-        validation, "%S"), textvariable=sv)
+    t = customtkinter.CTkEntry(data_frame, 
+                               validate="key",
+                               validatecommand=(validation, "%S"),
+                               textvariable=sv)
     t.grid(row=22, column=1)
 
     notebook.add(data_frame, text="Data")

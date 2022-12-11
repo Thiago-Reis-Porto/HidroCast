@@ -3,8 +3,8 @@ from methods.libard import pipeline_A_B
 
 def set_AB(notebook):
     try:
-        if notebook.a_b_frame:
-            AB_frame = notebook.a_b_frame
+        if notebook.AB_frame:
+            AB_frame = notebook.AB_frame
             notebook.add(AB_frame, text="A B")
             notebook.tab_list.append(AB_frame)
 
@@ -12,9 +12,9 @@ def set_AB(notebook):
         AB_frame = curve_frame(notebook,
                                 notebook.root.data,
                                 pipeline_A_B,
-                                lt=r"\theta x \theta^_")
+                                lt="A B")
                                 
-        notebook.a_b_frame = AB_frame
+        notebook.AB_frame = AB_frame
         notebook.add(AB_frame, text="A B")
         notebook.tab_list.append(AB_frame)
         

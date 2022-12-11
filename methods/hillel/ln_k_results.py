@@ -2,7 +2,7 @@ import numpy as np
 import pandas as pd
 from plots import plot_ajuste_2, set_image_visualization, set_result_visualization
 from scipy.optimize import curve_fit
-from utils import reta
+from utils import reta, export_tables
 
 
 def ln_k_curve_fit(data):
@@ -57,24 +57,41 @@ def pipeline_lnk_result(frame, data, **f_pos):
         lnk0, 3), np.round(k0, 3), equacaok))
 
     units = [r'$\mathbf{cm}$',
-             r'$\mathbf{cm / days}$',
+             r'$\mathbf{cm / day}$',
              r'$\mathbf{cm^3.cm^{-3}}$',
-             r'$\mathbf{cm / days}$',
-             r'$\mathbf{cm / days}$',
-             r'$\mathbf{cm / days}$']
+             r'$\mathbf{cm / day}$',
+             r'$\mathbf{cm / day}$',
+             r'$\mathbf{cm / day}$']
 
     dados = np.insert(dados, 0, units, 0)
 
     tabela_eqc = pd.DataFrame(data=dados)
     
     tabela_eqc.columns = ['z',
-                          'Equação ln(K)',
+                          'Equation ln(K)',
                           '$\mathbf{θ_0}$',
                           'ln($\mathbf{K_0}$)',
                           '$\mathbf{K_0}$',
-                          'Equação $\mathbf{K(θ)}$']
+                          'Equation $\mathbf{K(θ)}$']
 
     data["EQC TABLE"] = tabela_eqc
     note = frame.master.master
     set_result_visualization(note.result_frame, data)
+    
+    data["Result Hillel"] = data["EQC TABLE"]
+    data["Result Hillel"].columns = ['z',
+                                    'Equation ln(K)',
+                                    'Theta 0',
+                                    'ln(k0)',
+                                    'K0',
+                                    'Equation K theta']
+
+    data["Result Hillel"].loc[0] =  ['cm',
+                                     'cm / day',
+                                     'cm^3*cm^(-3)',
+                                     'cm / day',
+                                     'cm / day',
+                                     'cm / day']
+    data["EQC TABLE"] = None
+    export_tables(data)
   

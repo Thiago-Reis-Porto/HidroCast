@@ -11,7 +11,7 @@ def set_e_f(notebook):
         e_f_frame = curve_frame(notebook,
                                 notebook.root.data,
                                 pipeline_e_f,
-                                lt=r"θ x Mean(θ)")
+                                lt=r"e f")
                                 
         notebook.e_f_frame = e_f_frame
         notebook.add(e_f_frame, text="e f")
