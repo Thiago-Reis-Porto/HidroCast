@@ -35,21 +35,25 @@ def browse_files(label, data_dic, key):
                                                       "*.*")))
                                         
     if filename:
-        try:
+      #  try:
             name = re.split(r'/+|\\+', filename)[-1]   
             if name[-4:] == ".csv":
-                data_dic[key] = pd.read_csv(filename, sep=',|;', engine='python')
-                df = data_dic[key]
+                df = pd.read_csv(filename, sep=',|;', engine='python')
                 if df.columns.size > 1: 
                     df.set_index(df.columns[0], inplace=True) 
+                    df.index = pd.to_numeric(df.index)
+                df.columns = pd.to_numeric(df.columns)
+                data_dic[key] = df
             else:
-                data_dic[key] = pd.read_excel(filename)
-                df = data_dic[key]
+                df = pd.read_excel(filename)
                 if df.columns.size > 1: 
-                    df.set_index(df.columns[0], inplace=True)
+                    df.set_index(df.columns[0], inplace=True) 
+                    df.index = pd.to_numeric(df.index)
+                df.columns = pd.to_numeric(df.columns)
+                data_dic[key] = df
             label.configure(text="File Opened: "+name)
-        except:
-           messagebox.showerror("FILE ERROR", "Invalid file")
+    #    except:
+     #      messagebox.showerror("FILE ERROR", "Invalid file")
    
     return data_dic
 
@@ -67,12 +71,12 @@ def browse_files_2(label, data_dic, key):
             if name[-4:] == ".csv":
                 df = pd.read_csv(filename, sep=',|;', engine='python')
                 s = pd.Series(df.set_index(df.columns[0]).T.values[0])
-                s.index = df[df.columns[0]]
+                s.index =  pd.to_numeric(df[df.columns[0]])
                 data_dic[key] = s
             else:
                 df = pd.read_excel(filename)
                 s = pd.Series(df.set_index(df.columns[0]).T.values[0])
-                s.index = df[df.columns[0]]
+                s.index = pd.to_numeric(df[df.columns[0]])
                 data_dic[key] = s
             label.configure(text="File Opened: "+name)
         except:
@@ -224,7 +228,7 @@ def export_tables(data):
     isExist = os.path.exists(path)
     if not isExist:
         os.makedirs(path)
-        
+
     keys = get_tables_list(data)
     for k in keys:
         data[k].to_csv(os.path.join(path, k))

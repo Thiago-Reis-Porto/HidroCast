@@ -1,13 +1,12 @@
 import tkinter
 import numpy as np
+import os
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
-from sklearn.metrics import r2_score
 from VG import van_genutchen
-import matplotlib
-from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 from gui.image_scroll import ScrollableImage
-import os
+from sklearn.metrics import r2_score
+
 
 #matplotlib.use('TkAgg')
 
@@ -70,7 +69,11 @@ def plot_ajuste(x, y_data, func, params, titles, suptitle='', xlabel='', fit_nam
       # plt.annotate(f'$R^2$: {r2:.3f}', xy=xy, xycoords='axes fraction')
   plt.tight_layout()
   plt.subplots_adjust(top=0.95)
-  path = os.path.join('images', fit_name)
+  path = 'images'
+  isExist = os.path.exists(path)
+  if not isExist:
+    os.makedirs(path)
+  path = os.path.join(path, fit_name)
   plt.savefig(path, bbox_inches='tight',dpi=100)
   return path+".png"
 
@@ -107,9 +110,17 @@ def plot_ajuste_2(x, y_data, func, params, titles, suptitle='', xlabel='', fit_n
       # plt.annotate(f'$R^2$: {r2:.3f}', xy=xy, xycoords='axes fraction')
   plt.tight_layout()
   plt.subplots_adjust(top=0.95)
-  path = os.path.join('images', fit_name)
+  
+  path = 'images'
+  isExist = os.path.exists(path)
+  if not isExist:
+    os.makedirs(path)
+  path = os.path.join(path, fit_name)
+
   plt.savefig(path, bbox_inches='tight',dpi=100)
   fig = path+".png"
+
+  
 
   if r2_return:
     return r2_l, fig
@@ -145,7 +156,12 @@ def plot_ajuste_VG(df_params, df_theta, phi_lns=(0,500,100000)):
 
   plt.tight_layout()
   plt.subplots_adjust(hspace=0.6,)
-  path = os.path.join('images','VG_curves')
+
+  path = 'images'
+  isExist = os.path.exists(path)
+  if not isExist:
+    os.makedirs(path)
+  path = os.path.join(path, 'VG_curves')
   plt.savefig(path)
   return path+".png"
 
@@ -183,8 +199,13 @@ def plot_result(data, fig_size=(9.7, 6.7), bigger_font=False):
 
   ax.axis('off')
   ax.axis("tight")
+  
 
-  path = os.path.join('images','result')
+  path = 'images'
+  isExist = os.path.exists(path)
+  if not isExist:
+    os.makedirs(path)
+  path = os.path.join(path, 'result')
   plt.savefig(path, bbox_inches="tight")
   return path+".png"
 

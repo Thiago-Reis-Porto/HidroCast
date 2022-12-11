@@ -14,7 +14,8 @@ def set_theta(notebook):
         theta_frame = curve_frame(notebook,
                                 notebook.root.data,
                                 run_theta_time_pipeline,
-                                lt="θ x TIME")
+                                lt="θ x TIME",
+                                fm=['log'])
         notebook.theta_frame = theta_frame
         notebook.add(theta_frame, text="θ x Time")
         notebook.tab_list.append(theta_frame)

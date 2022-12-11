@@ -20,6 +20,7 @@ def get_water_storage(data):
     L = data["DEPTHS"] * 10
     L_list = np.array([*enumerate(L, 1)]).T
     THETA = data["THETAS TIME"]
+    print(L_list)
     WS = THETA.cumsum(axis=1)\
                 .apply(lambda x: x/L_list[0] * L_list[1], axis=1)
     data["WATER STORAGE"] = WS
@@ -182,16 +183,16 @@ def pipeline_e_f(frame, data, **f_pos):
     PSI_T = data["PSI T"]
     ln_tempo = data["LN TIME"]
     e_f = data["e_f"]
-    z = data['DEPTHS']
+    z = data["DEPTHS"]
 
-    titles =  [f'{z[i]}cm  y= {p[0]:.3f} *x + {p[1]:.3f}' for i,p in enumerate(e_f)]
+    titles =  [f"{z[i]}cm  y= {p[0]:.3f} *x + {p[1]:.3f}" for i,p in enumerate(e_f)]
 
     fig = plot_ajuste(ln_tempo,
                     PSI_T,
                     reta, 
                     e_f,  
                     titles, 
-                    suptitle="Ajuste", 
+                    suptitle="Adjust", 
                     xlabel=r"$ln(t)$", 
                     ylabel=r"$\Psi_t$",
                     shape=(10,3),
@@ -207,8 +208,8 @@ def pipeline_e_f(frame, data, **f_pos):
     result[0], result[-1] = '_','_'
 
     units = [r'$\mathbf{cm}$', 
-         r'$\mathbf{cm^3.cm^{-3}}$', 
-         r'$\mathbf{cm / days}$']
+             r'$\mathbf{cm^3.cm^{-3}}$', 
+             r'$\mathbf{cm / day}$']
     
     np_result = np.array([z, theta_0.values, result])
     np_result = np.insert(np_result, 0, units, axis=1)
@@ -216,7 +217,7 @@ def pipeline_e_f(frame, data, **f_pos):
     result_table = pd.DataFrame(np_result.T, 
                             columns=[r'z', 
                                      r'$\mathbf{θ_0}$',
-                                     r'Equação $\mathbf{K(θ)}$'])
+                                     r'Equation $\mathbf{K(θ)}$'])
 
     data['EQC TABLE'] = result_table
     

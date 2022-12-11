@@ -105,7 +105,7 @@ def pipeline_A_B(frame, data, **f_pos):
                                          r'$\mathbf{θ_0}$',
                                          r'$\mathbf{\beta}$',
                                          r'$\mathbf{K_0}$',
-                                         r'Equação $\mathbf{K(θ)}$'])
+                                         r'Equation $\mathbf{K(θ)}$'])
 
     data['EQC TABLE'] = result_table
 

@@ -2,7 +2,7 @@ import customtkinter
 
 
 class curve_frame(customtkinter.CTkFrame):
-    def __init__(self, master, data, f_run, *args, lt='label title', **kwargs):
+    def __init__(self, master, data, f_run, *args, lt='label title', fm=["linear"], **kwargs):
         super(curve_frame, self).__init__(master, *args, **kwargs)
         self.pack(fill='both', expand=True)
         self.columnconfigure(0, weight=1)
@@ -64,9 +64,8 @@ class curve_frame(customtkinter.CTkFrame):
         label_depth = customtkinter.CTkLabel(frame_CF, text="Function")
         label_depth.grid(row=2, column=1, pady=1)
         menu_depth = customtkinter.CTkOptionMenu(frame_CF,
-                                                 values=["linear"],
+                                                 values=fm,
                                                  width=70)
-        menu_depth.set('linear')
         menu_depth.grid(row=3, column=1)
 
         buttom_run = customtkinter.CTkButton(master=frame_CF,
