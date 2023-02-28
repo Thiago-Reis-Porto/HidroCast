@@ -81,8 +81,8 @@ def pipeline_A_B(frame, data, **f_pos):
                         params,  
                         titles, 
                         suptitle='Ajuste ', 
-                        xlabel='Z(m)', 
-                        ylabel=r'$\Psi_t$',
+                        xlabel=r'$ln(\theta)$', 
+                        ylabel=r'$\theta_0 - \theta$',
                         shape=(10,3),
                         figsize=(15, 32),
                         fit_name='a_curve_fit')

@@ -167,7 +167,7 @@ def pipeline_c_d(frame, data, **f_pos):
                     titles, 
                     suptitle="Ajuste", 
                     xlabel=r"$ln(t)$", 
-                    ylabel=r"$\theta$",
+                    ylabel=r"$S_L$",
                     shape=(10,3),
                     figsize=(15, 32),
                     fit_name="a_b_curve_fit")                    
